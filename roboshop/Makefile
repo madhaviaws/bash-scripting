@@ -22,8 +22,5 @@ mysql:
 shipping:
 	bash components/shipping.sh
 
-redis:
-	bash components/redis.sh
-
 payment:
 	bash components/payment.sh
