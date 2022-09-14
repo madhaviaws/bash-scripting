@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -e   # ensure your script will stop if any of the instruction fails
+set -e   # ensure your script will stop if any of the instruction fails
 
 
 source components/common.sh 
@@ -12,7 +12,7 @@ curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/sc
 stat $?
 
 echo -n "Installing   ${COMPONENT}: "
-curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash &>>/tmp/${COMPONENT}.log
+yum install rabbitmq-server -y  &>>/tmp/${COMPONENT}.log
 stat $?
 
 echo -n "Starting the Service: "
