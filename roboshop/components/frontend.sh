@@ -38,5 +38,5 @@ for component in catalogue user cart shipping; do
 done
 
 echo -n "Starting Ngnix: "
-systemctl restart ngnix
+systemctl restart nginx
 stat $?
