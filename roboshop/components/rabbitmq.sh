@@ -23,8 +23,11 @@ systemctl enable rabbitmq-server &>>/tmp/${COMPONENT}.log
 systemctl start rabbitmq-server &>>/tmp/${COMPONENT}.log
 stat $?
 
+rabbitmqctl list_users | grep roboshop  2>> ${LOGFILE} 
+if [ $? -ne 0 ]; then
 echo -n "Adding ${COMPONENT} user: "
 rabbitmqctl add_user roboshop roboshop123 &>>/tmp/${COMPONENT}.log
+fi
 stat $?
 
 echo -n "Configuring the $COMPONENT $FUSER permissions: "
