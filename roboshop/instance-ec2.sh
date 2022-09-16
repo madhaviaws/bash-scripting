@@ -14,7 +14,7 @@ AMI_ID=$(aws ec2 describe-images  --filters "Name=name,Values=DevOps-LabImage-Ce
 SGID="sg-0ea8356554a686c24"
 
 echo "The AMI which we are using is $AMI_ID"
-create-server() {
+createserver() {
     PRIVATE_IP=$(aws ec2 run-instances --image-id ${AMI_ID} --instance-type t3.micro  --security-group-ids ${SGID}  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}]" --instance-market-options "MarketType=spot, SpotOptions={SpotInstanceType=persistent,InstanceInterruptionBehavior=stop}"| jq '.Instances[].PrivateIpAddress' | sed -e 's/"//g')
 
     echo "Private IP of the created machine is $PRIVATE_IP"
@@ -29,7 +29,7 @@ if [ "$1" == "all" ] ; then
     for component in catalogue cart shipping mongodb payment rabbitmq redis mysql user; do 
         COMPONENT=$component
         # calling function
-        create-server
+        createserver
      done
 else 
      aws ec2 run-instances --image-id ${AMI_ID} --instance-type t3.micro  --security-group-ids ${SGID}  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}]" --instance-market-options "MarketType=spot, SpotOptions={SpotInstanceType=persistent,InstanceInterruptionBehavior=stop}"| jq 
